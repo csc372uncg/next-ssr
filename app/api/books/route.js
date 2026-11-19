@@ -5,6 +5,7 @@ import {
   getBooksByTypeAndAuthor,
   addBook
 } from '@/model/bookModel';
+import { auth } from '@/auth/auth-config';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -35,6 +36,14 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  const session = await auth();
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
   const { title, author, read, type } = await request.json();
   if (title == null || author == null || read == null || type == null) {
     return new Response(JSON.stringify({ error: 'Missing required fields' }), {

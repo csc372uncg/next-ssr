@@ -1,4 +1,5 @@
 import { getBookById, updateBookById, deleteBookById } from '@/model/bookModel';
+import { auth } from '@/auth/auth-config';
 
 export async function GET(request, { params }) {
   const { id } = await params;
@@ -15,6 +16,14 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  const session = await auth();
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
   const { id } = await params;
   const { title, author, read, type } = await request.json();
   const updatedBook = await updateBookById(id, { title, author, read, type });
@@ -30,6 +39,14 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  const session = await auth();
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
   const { id } = await params;
   const deletedBook = await deleteBookById(id);
   if (!deletedBook) {

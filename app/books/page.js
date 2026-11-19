@@ -6,10 +6,14 @@ import '@/app/books/books.css';
 import BookForm from './BookForm';
 import DeleteButton from './DeleteButton';
 import SearchBar from './SearchBar';
+import AuthControls from './AuthControls';
+import { auth } from '@/auth/auth-config';
+
 export default async function BooksPage({ searchParams }) {
   const params = await searchParams;
   const type = params?.type?.trim() || '';
   const author = params?.author?.trim() || '';
+  const session = await auth();
 
   let books;
   if (type && author) {
@@ -25,6 +29,7 @@ export default async function BooksPage({ searchParams }) {
   return (
     <div className="container">
       <h1>Books</h1>
+      <AuthControls />
       <SearchBar initialType={type} initialAuthor={author} />
       <article id="books-list">
         {books.map((book) => (
@@ -37,12 +42,12 @@ export default async function BooksPage({ searchParams }) {
             <p>Author: {book.author}</p>
             <p>Type: {book.type}</p>
             <p>Read: {book.read ? 'Yes' : 'No'}</p>
-            <DeleteButton bookId={book.id} />
+            {session && <DeleteButton bookId={book.id} />}
             <hr />
           </div>
         ))}
       </article>
-      <BookForm />
+      {session ? <BookForm /> : <p>Sign in with GitHub to add a book.</p>}
     </div>
   );
 }
