@@ -1,0 +1,147 @@
+.container {
+  width: min(960px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.container h1 {
+  margin-bottom: 24px;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+.search-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.search-form input,
+#book-form input {
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+  color: inherit;
+}
+
+.search-form button,
+#book-form button,
+.delete-button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #171717;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-form button:hover,
+#book-form button:hover,
+.delete-button:hover {
+  background: #333;
+}
+
+#books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.book-item,
+.book-details {
+  padding: 20px;
+  border: 1px solid #e4e4e4;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.book-item h2 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.book-item h2 a {
+  text-decoration: none;
+}
+
+.book-item h2 a:hover {
+  text-decoration: underline;
+}
+
+.book-item p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 0.92rem;
+}
+
+.book-item .delete-button {
+  margin-top: 14px;
+  background: #fff;
+  color: #b42318;
+  border: 1px solid #f1c7c2;
+}
+
+.book-item hr {
+  display: none;
+}
+
+.book-details {
+  margin-top: 16px;
+  max-width: 560px;
+}
+
+.book-details h1 {
+  margin-bottom: 16px;
+}
+
+.book-details p {
+  margin: 8px 0;
+}
+
+.book-details .delete-button {
+  margin-top: 16px;
+  background: #b42318;
+}
+
+#book-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto auto;
+  align-items: center;
+  gap: 8px;
+  padding-top: 24px;
+  border-top: 1px solid #ececec;
+}
+
+#book-form label {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.book-state {
+  padding: 48px 24px;
+  border: 1px solid #e4e4e4;
+  border-radius: 12px;
+  text-align: center;
+  color: #666;
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: min(100% - 24px, 960px);
+    padding: 32px 0;
+  }
+
+  .search-form,
+  #book-form {
+    flex-direction: column;
+    display: flex;
+  }
+
+  #books-list {
+    grid-template-columns: 1fr;
+  }
+}

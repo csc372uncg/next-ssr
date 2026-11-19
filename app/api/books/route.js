@@ -1,4 +1,10 @@
-import { getAllBooks, getBooksByType, getBooksByTypeAndAuthor, addBook } from '@/model/bookModel';
+import {
+  getAllBooks,
+  getBooksByAuthor,
+  getBooksByType,
+  getBooksByTypeAndAuthor,
+  addBook
+} from '@/model/bookModel';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -12,6 +18,11 @@ export async function GET(request) {
     });
   } else if (type) {
     const books = await getBooksByType(type);
+    return new Response(JSON.stringify(books), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } else if (author) {
+    const books = await getBooksByAuthor(author);
     return new Response(JSON.stringify(books), {
       headers: { 'Content-Type': 'application/json' }
     });

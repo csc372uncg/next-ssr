@@ -1,8 +1,8 @@
 import { getBookById, updateBookById, deleteBookById } from '@/model/bookModel';
 
 export async function GET(request, { params }) {
-  const bookId = params.id;
-  const book = await getBookById(bookId);
+  const { id } = await params;
+  const book = await getBookById(id);
   if (!book) {
     return new Response(JSON.stringify({ error: 'Book not found' }), {
       status: 404,
@@ -15,9 +15,9 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
-  const bookId = params.id;
+  const { id } = await params;
   const { title, author, read, type } = await request.json();
-  const updatedBook = await updateBookById(bookId, { title, author, read, type });
+  const updatedBook = await updateBookById(id, { title, author, read, type });
   if (!updatedBook) {
     return new Response(JSON.stringify({ error: 'Book not found' }), {
       status: 404,
@@ -30,8 +30,8 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
-  const bookId = params.id;
-  const deletedBook = await deleteBookById(bookId);
+  const { id } = await params;
+  const deletedBook = await deleteBookById(id);
   if (!deletedBook) {
     return new Response(JSON.stringify({ error: 'Book not found' }), {
       status: 404,

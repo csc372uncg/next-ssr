@@ -10,7 +10,7 @@ export async function getBookById(bookId) {
   return result.rows[0];
 }
 
-export async function deleteBook(bookId) {
+export async function deleteBookById(bookId) {
   const result = await pool.query('DELETE FROM books WHERE id = $1 RETURNING *', [bookId]);
   return result.rows[0];
 }
@@ -24,7 +24,7 @@ export async function addBook(book) {
   return result.rows[0];
 }
 
-export async function updateBook(bookId, book) {
+export async function updateBookById(bookId, book) {
   const { title, author, read, type } = book;
   const result = await pool.query(
     'UPDATE books SET title = $1, author = $2, read = $3, type = $4 WHERE id = $5 RETURNING *',
@@ -35,6 +35,11 @@ export async function updateBook(bookId, book) {
 
 export async function getBooksByType(type) {
   const result = await pool.query('SELECT * FROM books WHERE type ILIKE $1', [`%${type}%`]);
+  return result.rows;
+}
+
+export async function getBooksByAuthor(author) {
+  const result = await pool.query('SELECT * FROM books WHERE author ILIKE $1', [`%${author}%`]);
   return result.rows;
 }
 
